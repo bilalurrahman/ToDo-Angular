@@ -5,15 +5,15 @@
       <div class="card">
         <div class="card-body">
           <p class="text-left text-uppercase font-weight-bold">Please login to your account</p>
-          <form>
+          <form #form="ngForm" (ngSubmit)="onFormSubmit()">
             <!-- Email input -->
             <div class="form-outline mb-4">
-              <input type="text" id="username" class="form-control" placeholder="USERNAME"/>             
+              <input type="text" id="username" name="username" (blur)="Validate()" (keyup)="Validate()" [(ngModel)]="model.username" [class]="dynamicClass_username" placeholder="USERNAME"/>             
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-              <input type="password" id="password" class="form-control" placeholder="PASSWORD" />
+              <input type="password" id="password" name="password" (blur)="Validate()" (keyup)="Validate()" [(ngModel)]="model.password" [class]="dynamicClass" placeholder="PASSWORD" />
             </div>
 
             <!-- 2 column grid layout for inline styling -->
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Submit button -->
-            <button type="button" class="btn btn-primary btn-block mb-4">
+            <button type="submit" class="btn btn-primary btn-block mb-4">
               Sign in
             </button>
 
@@ -53,6 +53,16 @@
         </div>
       </div>
     </div>
-    
+    <div style="z-index: 11" class="border border-danger toast position-fixed bottom-0 start-0 " [class.show]="showAlert">
+      <div class="toast-header">
+        <strong class="mr-auto">Message</strong>
+        <button type="button" class="ml-2 mb-1 close btn-close" data-dismiss="toast" (click)="hideBootstrapAlert()">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="toast-body">
+        {{error}}
+      </div>
+    </div>
   </div>
 </div>
