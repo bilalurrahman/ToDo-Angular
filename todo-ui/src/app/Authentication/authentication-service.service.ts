@@ -1,21 +1,51 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Register } from './Models/register-user.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Login } from './Models/login-user.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Credentials, CredentialsService } from '../Core/auth/credentials.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Methods':'GET,POST,DELETE,PUT'
+  })
+};
+const jwtHelperService = new JwtHelperService();
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationServiceService {
 
-  constructor(private http:HttpClient) { }
+  baseUrl:string = 'http://localhost:5710';
+  constructor(private credentialsService: CredentialsService,private http:HttpClient) { }
 
   registerUserService(model:Register):Observable<void>
   {
-    return this.http.post<void>('http://localhost:5800/User/Register',model) //make the base url dynamic
+    return this.http.post<void>(this.baseUrl+'/Register',model,httpOptions) //make the base url dynamic
   }
   loginUserService(model:Login):Observable<any>{
-    return this.http.post<any>('http://localhost:5800/User/Login',model)
+    return this.http.post<any>(this.baseUrl+'/Login',model,httpOptions).pipe(map((res) => this.saveUserCredentials(res)));
+  }
+
+
+  private saveUserCredentials(res: any): Observable<object> {
+    
+    const decodedToken = jwtHelperService.decodeToken(res?.token);
+
+    const credential: Credentials = {
+      username: decodedToken?.Name,
+      payloads: decodedToken,
+      token: res?.token,
+      roles: [],
+    };
+    // if (decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] instanceof Array) {
+    //   credential.roles =this.roles = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    // } else {
+    //   credential.roles=this.roles = [decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']];
+    // }
+    this.credentialsService.setCredentials(credential, false);
+    return res;
   }
 }

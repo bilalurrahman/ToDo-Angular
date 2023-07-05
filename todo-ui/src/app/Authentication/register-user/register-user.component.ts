@@ -1,27 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Register } from '../Models/register-user.model';
 import { AuthenticationServiceService } from '../authentication-service.service';
 import { Router } from '@angular/router';
+import { CredentialsService } from 'src/app/Core/auth/credentials.service';
 
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css']
 })
-export class RegisterUserComponent {
+export class RegisterUserComponent implements OnInit {
   model:Register;
   dynamicClass!:string;
   dynamicClass_username!:string;
   showAlert: boolean = false;
   error:string = "Some Error Occurs"
 
-  constructor(private authService:AuthenticationServiceService,private router: Router){
+  constructor(private authService:AuthenticationServiceService
+    ,private router: Router,private credentialsService: CredentialsService){
     this.model ={
       password:'',
       username:''
     }
     this.dynamicClass = 'form-control'
     this.dynamicClass_username ='form-control'
+  }
+
+  ngOnInit(): void {
+    if (this.credentialsService.isAuthenticated()) {
+      this.router.navigate(['']);
+    }
   }
 
 
@@ -58,7 +66,7 @@ export class RegisterUserComponent {
     else this.dynamicClass_username = 'form-control is-valid'
   }
 
-  
+
   showBootstrapAlert() {
     this.showAlert = true;
   }
