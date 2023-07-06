@@ -40,6 +40,11 @@ export class LoginUserComponent implements OnInit {
       this.authService.loginUserService(this.model)
         .subscribe({
           next: (response) => {
+            //auto logout time 
+            console.log(response);
+            var expdate:any = new Date(response?.refreshTokenExpiry);
+            var datetimenow:any = new Date();
+            this.credentialsService.autologOut(expdate);
             this.router.navigate(['']);
           },
           error: (response) => {

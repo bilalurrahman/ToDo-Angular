@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,9 @@ import { TaskCreateComponent } from './Task/task-create/task-create.component';
 import { TaskUpdateComponent } from './Task/task-update/task-update.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-shimmer.component';
+
+
 
 
 @NgModule({
@@ -21,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     NavBarComponent,
     TaskListComponent,
     TaskCreateComponent,
-    TaskUpdateComponent
+    TaskUpdateComponent,
+    LoaderShimmerComponent,   
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   schemas:[
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ],
   providers: [],
   bootstrap: [AppComponent]

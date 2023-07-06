@@ -17,6 +17,11 @@
             <p class="text-uppercase font-weight-bold">Tasks</p>
             <div class="card text-left" style="text-align: left;">
                 <ul class="list-group list-group-flush ">
+
+                    <app-loader-shimmer *ngIf="isLoading">
+
+                    </app-loader-shimmer>
+
                   <li *ngFor="let list of lists" class="list-group-item">
                     <span>
                         {{list.title}}

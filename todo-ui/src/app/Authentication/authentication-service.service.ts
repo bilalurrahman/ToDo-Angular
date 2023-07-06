@@ -36,6 +36,7 @@ export class AuthenticationServiceService {
 
     const credential: Credentials = {
       username: decodedToken?.Name,
+      expirydate:res?.refreshTokenExpiry,
       payloads: decodedToken,
       token: res?.token,
       roles: [],

@@ -1,9 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface Credentials {
   // Customize received credentials here
   username: string;
+  expirydate: string;
   payloads: any;
   token: string;
   roles: string[];
@@ -19,9 +21,11 @@ const credentialsKey = 'credentials';
   providedIn: 'root',
 })
 export class CredentialsService {
+
+  
   private _credentials: Credentials | null = null;
 
-  constructor() {
+  constructor(private router:Router) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -57,6 +61,8 @@ export class CredentialsService {
     if (credentials) {
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem(credentialsKey, JSON.stringify(credentials));
+   
+
     } else {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
@@ -85,5 +91,21 @@ export class CredentialsService {
     }
     console.log(httpOptions);
     return httpOptions;
+  }
+
+
+  autologOut(expirationDate:number){
+    console.log(expirationDate);
+    let nowDate:any = new Date();
+    console.log(nowDate);
+    expirationDate = expirationDate-nowDate;
+    console.log("difference:"+ expirationDate);
+    setTimeout(() => {
+      this.setCredentials();
+      sessionStorage.clear();
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    }, expirationDate);
+
   }
 }

@@ -8,15 +8,17 @@ import { TaskServiceService } from '../task-service.service';
 })
 export class TaskListComponent implements OnInit {
   lists:any;
+  isLoading:boolean = true;
   constructor(private taskservice:TaskServiceService){}
   ngOnInit(): void {
     this.taskservice.getAllTasks()
     .subscribe({
       next: (response) => {
-        console.log(response)
+        this.isLoading = false
         this.lists = response;
       },
       error: (response) => {
+        this.isLoading = false
         console.log(response)
       }
     })
