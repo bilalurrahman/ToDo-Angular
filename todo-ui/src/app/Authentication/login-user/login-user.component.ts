@@ -18,9 +18,11 @@ export class LoginUserComponent implements OnInit {
   dynamicClass_username!: string;
   showAlert: boolean = false;
   error: string = "Some Error Occurs"
+  isLoading:Boolean = false;
 
   constructor(private authService: AuthenticationServiceService,
     private router: Router,private credentialsService: CredentialsService) {
+
     this.model = {
       password: '',
       username: ''
@@ -34,9 +36,10 @@ export class LoginUserComponent implements OnInit {
     }
   }
   onFormSubmit() {
+    
     const fieldsNotEmpty = Object.values(this.model).every(field => field !== '');
     if (fieldsNotEmpty) {
-
+      this.isLoading =true;
       this.authService.loginUserService(this.model)
         .subscribe({
           next: (response) => {

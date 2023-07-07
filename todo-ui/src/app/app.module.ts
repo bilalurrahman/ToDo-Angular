@@ -12,6 +12,7 @@ import { TaskUpdateComponent } from './Task/task-update/task-update.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-shimmer.component';
+import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-loader.component';
 
 
 
@@ -25,7 +26,8 @@ import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-sh
     TaskListComponent,
     TaskCreateComponent,
     TaskUpdateComponent,
-    LoaderShimmerComponent,   
+    LoaderShimmerComponent,
+    SimpleLoaderComponent,   
   ],
   imports: [
     BrowserModule,

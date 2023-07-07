@@ -41,9 +41,14 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4">
+            <button type="submit" class="btn btn-primary btn-block mb-4" *ngIf="!isLoading">
               Sign in
             </button>
+            
+            <app-simple-loader *ngIf="isLoading">
+              
+            </app-simple-loader>
+
 
             <!-- Register buttons -->
             <div class="text-center">
