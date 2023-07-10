@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { Login } from './Models/login-user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Credentials, CredentialsService } from '../Core/auth/credentials.service';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,15 +19,14 @@ const jwtHelperService = new JwtHelperService();
 })
 export class AuthenticationServiceService {
 
-  baseUrl:string = 'http://localhost:5710';
   constructor(private credentialsService: CredentialsService,private http:HttpClient) { }
 
   registerUserService(model:Register):Observable<void>
   {
-    return this.http.post<void>(this.baseUrl+'/Register',model,httpOptions) //make the base url dynamic
+    return this.http.post<void>(environment.apiUrl+'Register',model,httpOptions) //make the base url dynamic
   }
   loginUserService(model:Login):Observable<any>{
-    return this.http.post<any>(this.baseUrl+'/Login',model,httpOptions).pipe(map((res) => this.saveUserCredentials(res)));
+    return this.http.post<any>(environment.apiUrl+'Login',model,httpOptions).pipe(map((res) => this.saveUserCredentials(res)));
   }
 
 
