@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-shimmer.component';
 import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-loader.component';
 import { DatePipe } from '@angular/common';
+import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toast-popup.component';
 
 
 
@@ -28,7 +29,8 @@ import { DatePipe } from '@angular/common';
     TaskCreateComponent,
     TaskUpdateComponent,
     LoaderShimmerComponent,
-    SimpleLoaderComponent,   
+    SimpleLoaderComponent,
+    ToastPopupComponent,   
     
   ],
   imports: [

@@ -29,5 +29,8 @@ export class TaskServiceService {
   {
     return this.http.delete<any>(environment.apiUrl+`Tasks/${id}`,this.headers) //make the base url dynamic
   }
+  updateTask(model:TasksEntity){
+    return this.http.put<any>(environment.apiUrl+"Tasks/",model,this.headers) //make the base url dynamic
+  }
 
 }

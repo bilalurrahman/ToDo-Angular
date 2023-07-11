@@ -16,8 +16,13 @@
                     <app-loader-shimmer *ngIf="isLoading">
                     </app-loader-shimmer>
 
-                  <li *ngFor="let list of lists" class="list-group-item span-animation" [class.fadeOut]="itemToRemove === list">
-                    <span>
+                  <li *ngFor="let list of lists"
+                   class="list-group-item span-animation"
+                    [class.fadeOut]="itemToRemove === list"
+                    [class.completed]="list.isCompleted">
+                   
+                   <input type="checkbox" [(ngModel)]="list.isCompleted" (click)="taskStatusToggle(list)"/>
+                    <span  [class.strikethrough]="list.isCompleted">
                         {{list.title}}
                     </span>
                     
@@ -34,9 +39,15 @@
               </div>
           </div>
 
+          <app-toast-popup [error]="error" 
+        [showAlert]="showToast" (closeToast)="closeToast()">
+        </app-toast-popup>
         </div>
+        
       </div>
       
     </div>
+    
+
   </div>
   

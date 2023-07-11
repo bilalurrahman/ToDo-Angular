@@ -15,6 +15,9 @@ export class TaskListComponent implements OnInit {
   lists:TasksEntity[]; 
   isLoading:boolean = true;
   resetForm: boolean = false;
+  error: string = '';
+  showToast: boolean = false;
+
   constructor(private taskservice:TaskServiceService,
     private datepipe:DatePipe){
     this.lists = [];   
@@ -32,7 +35,9 @@ export class TaskListComponent implements OnInit {
       }
     })
   }
-
+  closeToast(): void {
+    this.showToast = false;
+  }
   createTask(task: TasksEntity){
     const fieldsNotEmpty = task.title !== '' && task.title !=null;    
     if(fieldsNotEmpty){
@@ -82,10 +87,13 @@ export class TaskListComponent implements OnInit {
       next: (response) => {
         item.id=response.id;
         this.lists.unshift(item); 
-        console.log(this.lists);        
+        this.error="Task Created Successfully";
+        this.showToast=true;      
       },
       error: (response) => {        
-        console.log(response)
+        console.log(response);
+        this.error=response;
+        this.showToast=true; 
       }
     })
   }
@@ -94,13 +102,56 @@ export class TaskListComponent implements OnInit {
     this.taskservice.deleteTasks(item.id)
     .subscribe({
       next: (response) => {
-        console.log(response);  
-        this.deleteTask(item);     
+        this.deleteTask(item);
+        this.error="Task Deleted Successfully";
+        this.showToast=true;  
       },
       error: (response) => {        
         console.log(response)
+        this.error=response;
+        this.showToast=true;
       }
     })
   }
+
+  taskStatusToggle(item:TasksEntity){
+   
+    var date = this.datepipe.transform(new Date(),"yyyy-MM-dd")
+      let updatedTask: TasksEntity = {
+      id: item.id,
+      createdBy: item.createdBy,
+      lastModifiedBy: item.lastModifiedBy,
+      createdDate: item.createdDate,
+      lastModifiedDate: date?.toString(),
+      isActive: item.isActive,
+      userId: item.userId,
+      isCompleted: (item.isCompleted)?false:true,
+      isDeleted: false,
+      title: item.title,
+      description: item.description,
+      status: item.status,
+      dueDate: item.dueDate,
+      haveReminder: item.haveReminder,
+      reminderDateTime: item.reminderDateTime,
+      isNotifiedForReminder: item.isNotifiedForReminder,
+      isPinned: item.isPinned,
+      isNotifiedForDue: item.isNotifiedForDue,
+      subTasks: item.subTasks
+      }
+
+    this.taskservice.updateTask(updatedTask)
+    .subscribe({
+      next: (response) => {
+        this.error="Task Updated Successfully";
+        this.showToast=true;  
+      },
+      error: (response) => {                
+        this.error=response;
+        this.showToast=true;
+      }
+    })
+  }
+  
+
 
 }

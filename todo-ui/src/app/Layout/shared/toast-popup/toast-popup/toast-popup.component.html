@@ -1,0 +1,11 @@
+<div style="z-index: 11" class="border border-success-subtle toast position-fixed bottom-0 start-0 " [class.show]="showAlert">
+    <div class="toast-header">
+      <strong class="mr-auto">Message</strong>
+      <button type="button" class="ml-2 mb-1 close btn-close" data-dismiss="toast" (click)="hideBootstrapAlert()">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="toast-body">
+      {{error}}
+    </div>
+  </div>
