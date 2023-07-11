@@ -13,7 +13,7 @@ export class RegisterUserComponent implements OnInit {
   model:Register;
   dynamicClass!:string;
   dynamicClass_username!:string;
-  showAlert: boolean = false;
+  showToast: boolean = false;
   error:string = "Some Error Occurs"
 
   constructor(private authService:AuthenticationServiceService
@@ -68,12 +68,12 @@ export class RegisterUserComponent implements OnInit {
 
 
   showBootstrapAlert() {
-    this.showAlert = true;
+    this.showToast = true;
   }
 
   // Method to hide the alert
-  hideBootstrapAlert() {
-    this.showAlert = false;
+  closeToast(): void {
+    this.showToast = false;
   }
 
 }

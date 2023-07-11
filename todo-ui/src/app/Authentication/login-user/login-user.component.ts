@@ -16,7 +16,7 @@ export class LoginUserComponent implements OnInit {
 
   dynamicClass!: string;
   dynamicClass_username!: string;
-  showAlert: boolean = false;
+  showToast: boolean = false;
   error: string = "Some Error Occurs"
   isLoading:Boolean = false;
 
@@ -35,6 +35,9 @@ export class LoginUserComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
+  closeToast(): void {
+    this.showToast = false;
+  }
   onFormSubmit() {
     
     const fieldsNotEmpty = Object.values(this.model).every(field => field !== '');
@@ -51,6 +54,7 @@ export class LoginUserComponent implements OnInit {
             this.router.navigate(['']);
           },
           error: (response) => {
+            this.isLoading = false;
             this.error = response.error.ErrorMessage;
             this.showBootstrapAlert();
           }
@@ -73,11 +77,7 @@ export class LoginUserComponent implements OnInit {
 
 
   showBootstrapAlert() {
-    this.showAlert = true;
+    this.showToast = true;
   }
 
-  // Method to hide the alert
-  hideBootstrapAlert() {
-    this.showAlert = false;
-  }
 }
