@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-shimmer.component';
 import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-loader.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -28,6 +29,7 @@ import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-load
     TaskUpdateComponent,
     LoaderShimmerComponent,
     SimpleLoaderComponent,   
+    
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,7 @@ import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-load
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

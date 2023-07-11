@@ -4,13 +4,8 @@
       <div class="mx-auto col-10 col-md-8 col-lg-6">
         <div class="card">
           <div class="card-body">
-            <p class="text-left text-uppercase font-weight-bold">Create Task</p>
-            <form>
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <input type="text" id="title" name="title" class="form-control" placeholder="Title"/>             
-                </div>
-            </form>
+            <app-task-create (onSubmit)="createTask($event)" [resetForm]="resetForm">
+            </app-task-create>
           </div>
 
           <div class="card-body">
@@ -19,15 +14,14 @@
                 <ul class="list-group list-group-flush ">
 
                     <app-loader-shimmer *ngIf="isLoading">
-
                     </app-loader-shimmer>
 
-                  <li *ngFor="let list of lists" class="list-group-item">
+                  <li *ngFor="let list of lists" class="list-group-item span-animation" [class.fadeOut]="itemToRemove === list">
                     <span>
                         {{list.title}}
                     </span>
                     
-                    <button type="button" class="ml-4 mb-1 close btn-close" style="float: right;margin-right: 2px;">
+                    <button type="button" class="ml-4 mb-1 close btn-close" style="float: right;margin-right: 2px;" (click)="deleteTaskService(list)">
                         <span aria-hidden="true"></span>
                     </button>
                     <span style="float: right;margin-right: 5px;" class="ml-4">
