@@ -42,6 +42,7 @@ export class TaskListComponent implements OnInit {
     const fieldsNotEmpty = task.title !== '' && task.title !=null;    
     if(fieldsNotEmpty){
       var date = this.datepipe.transform(new Date(),"yyyy-MM-dd")
+      var duedate = this.datepipe.transform(new Date(1970,1,1),"yyyy-MM-dd")
       let newTask: TasksEntity = {
       id: '',
       createdBy: '',
@@ -55,7 +56,7 @@ export class TaskListComponent implements OnInit {
       title: task.title,
       description: '',
       status: 0,
-      dueDate: date?.toString(),
+      dueDate: duedate?.toString(),
       haveReminder: false,
       reminderDateTime: date?.toString(),
       isNotifiedForReminder: false,
