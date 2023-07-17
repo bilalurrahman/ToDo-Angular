@@ -68,7 +68,9 @@ export class TaskListComponent implements OnInit {
            
       task.title='';
       this.childComponent.form.resetForm();
-
+      this.childComponent.dynamicClass='form-control';
+    } else{
+      this.childComponent.Validate();
     }
   }
   itemToRemove: TasksEntity | null = null;

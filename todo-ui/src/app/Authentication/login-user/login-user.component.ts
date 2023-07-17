@@ -55,7 +55,8 @@ export class LoginUserComponent implements OnInit {
           },
           error: (response) => {
             this.isLoading = false;
-            this.error = response.error.ErrorMessage;
+            console.log(response);
+            this.error = response?.error?.ErrorMessage;
             this.showBootstrapAlert();
           }
         })

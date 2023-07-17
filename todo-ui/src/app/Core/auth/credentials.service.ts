@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface Credentials {
   // Customize received credentials here
@@ -25,8 +26,9 @@ export class CredentialsService {
   
   private _credentials: Credentials | null = null;
 
-  constructor(private router:Router) {
-    const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
+  constructor(private router:Router,private cookieService:CookieService) {
+    const savedCredentials = this.cookieService.get(credentialsKey)
+    //sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
     }
@@ -59,13 +61,17 @@ export class CredentialsService {
     this._credentials = credentials || null;
 
     if (credentials) {
-      const storage = remember ? localStorage : sessionStorage;
-      storage.setItem(credentialsKey, JSON.stringify(credentials));
-   
+      //const storage = remember ? localStorage : sessionStorage;
+      //storage.setItem(credentialsKey, JSON.stringify(credentials));
+
+      this.cookieService.set(credentialsKey,JSON.stringify(credentials),
+      undefined,'/',undefined,true,'Strict')
 
     } else {
-      sessionStorage.removeItem(credentialsKey);
-      localStorage.removeItem(credentialsKey);
+
+      this.cookieService.delete('testcookie')
+     // sessionStorage.removeItem(credentialsKey);
+      //localStorage.removeItem(credentialsKey);
     }
   }
 
@@ -103,7 +109,8 @@ export class CredentialsService {
     setTimeout(() => {
       this.setCredentials();
       sessionStorage.clear();
-      localStorage.clear();
+      localStorage.clear();     
+      this.cookieService.delete(credentialsKey);
       this.router.navigate(['/login']);
     }, expirationDate);
 

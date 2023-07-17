@@ -9,12 +9,13 @@ import { NavBarComponent } from './Layout/nav-bar/nav-bar.component';
 import { TaskListComponent } from './Task/task-list/task-list.component';
 import { TaskCreateComponent } from './Task/task-create/task-create.component';
 import { TaskUpdateComponent } from './Task/task-update/task-update.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoaderShimmerComponent } from './Layout/shared/loader-shimmer/loader-shimmer.component';
 import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-loader.component';
 import { DatePipe } from '@angular/common';
 import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toast-popup.component';
+import { HeaderInterceptor } from './Core/header.interceptor';
 
 
 
@@ -43,7 +44,14 @@ import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toa
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

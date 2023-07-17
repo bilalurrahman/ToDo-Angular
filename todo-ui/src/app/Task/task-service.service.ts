@@ -17,20 +17,20 @@ export class TaskServiceService {
   getAllTasks():Observable<TasksEntity[]>
   {
     const headers = this.credentialsService.getHeaders();
-    return this.http.get<TasksEntity[]>(environment.apiUrl+"Tasks/GetAll",headers) //make the base url dynamic
+    return this.http.get<TasksEntity[]>(environment.apiUrl+"Tasks/GetAll") //make the base url dynamic
   }
 
   createTask(model:TasksEntity):Observable<any>
   {
-      return this.http.post<any>(environment.apiUrl+"Tasks/",model,this.headers) //make the base url dynamic
+      return this.http.post<any>(environment.apiUrl+"Tasks/",model) //make the base url dynamic
   }
 
   deleteTasks(id:string):Observable<any>
   {
-    return this.http.delete<any>(environment.apiUrl+`Tasks/${id}`,this.headers) //make the base url dynamic
+    return this.http.delete<any>(environment.apiUrl+`Tasks/${id}`) //make the base url dynamic
   }
   updateTask(model:TasksEntity){
-    return this.http.put<any>(environment.apiUrl+"Tasks/",model,this.headers) //make the base url dynamic
+    return this.http.put<any>(environment.apiUrl+"Tasks/",model) //make the base url dynamic
   }
 
 }

@@ -23,10 +23,10 @@ export class AuthenticationServiceService {
 
   registerUserService(model:Register):Observable<void>
   {
-    return this.http.post<void>(environment.apiUrl+'Register',model,httpOptions) //make the base url dynamic
+    return this.http.post<void>(environment.apiUrl+'Register',model) //make the base url dynamic
   }
   loginUserService(model:Login):Observable<any>{
-    return this.http.post<any>(environment.apiUrl+'Login',model,httpOptions).pipe(map((res) => this.saveUserCredentials(res)));
+    return this.http.post<any>(environment.apiUrl+'Login',model).pipe(map((res) => this.saveUserCredentials(res)));
   }
 
 
