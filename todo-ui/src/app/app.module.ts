@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,7 @@ import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toa
 import { HeaderInterceptor } from './Core/header.interceptor';
 import { TimerPopupComponent } from './Task/pomodoros/timer-popup/timer-popup.component';
 import { TimerFormatPipe } from './Task/pomodoros/timer-format.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -41,7 +42,13 @@ import { TimerFormatPipe } from './Task/pomodoros/timer-format.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA,
