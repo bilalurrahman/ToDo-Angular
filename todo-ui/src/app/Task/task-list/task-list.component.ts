@@ -17,6 +17,9 @@ export class TaskListComponent implements OnInit {
   resetForm: boolean = false;
   error: string = '';
   showToast: boolean = false;
+  isTimerRunning:boolean =false;
+  showTimerPopup:boolean =false;
+  timer!:any;
 
   constructor(private taskservice:TaskServiceService,
     private datepipe:DatePipe){
@@ -154,7 +157,26 @@ export class TaskListComponent implements OnInit {
       }
     })
   }
-  
+
+ 
+
+  openTimerPopup(list: any) {
+    this.showTimerPopup = true; // Flag to indicate if the timer popup is visible
+  }
+
+  closeTimerPopup() {
+    this.showTimerPopup = false; // Hide the timer popup
+  }
+
+  startTimer() {
+    this.isTimerRunning = true;     
+  }
+
+  stopTimer() {
+    this.isTimerRunning = false; // Flag to indicate that the timer is not running
+    // Add logic to stop the timer for the specific task
+    this.timer = 0;
+  }
 
 
 }

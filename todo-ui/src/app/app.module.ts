@@ -16,6 +16,8 @@ import { SimpleLoaderComponent } from './Layout/shared/simple-loader/simple-load
 import { DatePipe } from '@angular/common';
 import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toast-popup.component';
 import { HeaderInterceptor } from './Core/header.interceptor';
+import { TimerPopupComponent } from './Task/pomodoros/timer-popup/timer-popup.component';
+import { TimerFormatPipe } from './Task/pomodoros/timer-format.pipe';
 
 
 
@@ -31,8 +33,9 @@ import { HeaderInterceptor } from './Core/header.interceptor';
     TaskUpdateComponent,
     LoaderShimmerComponent,
     SimpleLoaderComponent,
-    ToastPopupComponent,   
-    
+    ToastPopupComponent,
+    TimerPopupComponent,   
+    TimerFormatPipe
   ],
   imports: [
     BrowserModule,
