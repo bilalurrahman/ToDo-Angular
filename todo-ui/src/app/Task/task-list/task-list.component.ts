@@ -3,6 +3,7 @@ import { TaskServiceService } from '../task-service.service';
 import { TasksEntity } from '../Models/task-list.model';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 import { DatePipe } from '@angular/common';
+import { MessagingService } from '../../services/messaging.service';
 
 @Component({
   selector: 'app-task-list',
@@ -22,7 +23,9 @@ export class TaskListComponent implements OnInit {
   timer!:any;
 
   constructor(private taskservice:TaskServiceService,
-    private datepipe:DatePipe){
+    private datepipe:DatePipe,private pushnotification:MessagingService){
+      this.pushnotification.requestPermission();
+      this.pushnotification.receiveMessage();
     this.lists = [];   
   }
   ngOnInit(): void {

@@ -18,8 +18,12 @@ import { ToastPopupComponent } from './Layout/shared/toast-popup/toast-popup/toa
 import { HeaderInterceptor } from './Core/header.interceptor';
 import { TimerPopupComponent } from './Task/pomodoros/timer-popup/timer-popup.component';
 import { TimerFormatPipe } from './Task/pomodoros/timer-format.pipe';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {AngularFireModule} from '@angular/fire/compat'
+import {AngularFireMessagingModule} from '@angular/fire/compat/messaging'
 
+import { environment } from 'src/environments/environment';
+import {MessagingService} from './services/messaging.service'
+import { AsyncPipe } from '@angular/common';
 
 
 
@@ -43,12 +47,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA,
@@ -60,7 +60,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptor,
       multi: true
-    }
+    },
+    MessagingService,
+    AsyncPipe
   ],
   bootstrap: [AppComponent]
 })
